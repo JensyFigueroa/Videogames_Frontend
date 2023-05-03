@@ -93,7 +93,7 @@ export default function CreateGame() {
     console.log('Enviar el form ', form);
 
     // axios.post('http://localhost:3001/videogames', form)
-    axios.post('https://likely-knife-production.up.railway.app/videogames/videogames', form)
+    axios.post('https://likely-knife-production.up.railway.app/videogames', form)
 
     alert('The card was created correctly...!');
     navigate('/videogames');
