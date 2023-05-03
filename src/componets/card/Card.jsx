@@ -5,7 +5,7 @@ import styles from './Card.module.css'
 export default function Card(props) {
 
     return (
-        <div className={styles.card}>
+        <div className={styles.card} title='click to see details'>
             <Link to={`/detail/${props.id}`} className={styles.detail}>
                 <img src={props.image} alt={props.name}/>
                 <h2>{props.name}</h2>
