@@ -9,12 +9,20 @@ import sequelize from './img/sequelize.svg'
 import postman from './img/postman.svg'
 import postgre from './img/postgresql.svg'
 import node from './img/node.png'
+import photoPerfil from './img/photo-Perfil.png'
 
 export default function About() {
   return (
     <div className={styles.container}>
       <div className={styles.boxDescription}>
+        <h1>About me</h1>
+        <div className={styles.aboutMe}>
+          <img src={photoPerfil} alt="" />
+          <p>My name is Jensy Figueroa, I have completed the Full Stack Development BootCamp at Henry and this App is my individual project.</p>
+        </div>
+
         <h1>About the app</h1>
+        <div className={styles.aboutApp}>
         <p>It is a video game application, in which cards from different games are shown, which we can filter by name, gender, origin and ascending and descending order, you can click on each one and see its details, you can also create your own cards with your favorite games.
         </p>
         <div>
@@ -60,6 +68,8 @@ export default function About() {
         <div className={styles.tecnologies}>
           <img src={postgre} alt="" style={{ width: '44px', height: '50px' }} />
           <p>PostgreSQL, also called Postgres, is an open source, object-oriented relational database management system, released under the PostgreSQL license, similar to BSD or MIT.</p>
+        </div>
+
         </div>
       </div>
     </div >
