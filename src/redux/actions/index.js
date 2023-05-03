@@ -20,12 +20,18 @@ export const getGames = () => {
 }
 
 export const getGameName = (name) => {
+  console.log(name,'action')
   return async function (dispatch) {
     // const apiData = await axios.get(`http://localhost:3001/videogames/name?name=${name}`)
-    const apiData = await axios.get(`https://likely-knife-production.up.railway.app/videogames/name?name=${name}`)
-    const games = apiData.data;
-    // console.log(games,'Actions get x name');
-    dispatch({ type: GET_GAME_X_NAME, payload: games })
+    if (!name.length) {
+      dispatch({ type: GET_GAME_X_NAME, payload: name })
+    } else {
+      const apiData = await axios.get(`https://likely-knife-production.up.railway.app/videogames/name?name=${name}`)
+      const games = apiData.data;
+      // console.log(games,'Actions get x name');
+      dispatch({ type: GET_GAME_X_NAME, payload: games })
+    }
+
   }
 }
 
@@ -42,24 +48,24 @@ export const getGenres = () => {
 export const filterGenres = (status) => {
   // console.log(status,'actions');
   return {
-      type: FILTER_GENRES,
-      payload: status
+    type: FILTER_GENRES,
+    payload: status
   }
 }
 
 
-export const orderCards = (id) =>{
+export const orderCards = (id) => {
   //  console.log(id,'actions');
-  return{
-      type: ORDER_CARDS,
-      payload: id
+  return {
+    type: ORDER_CARDS,
+    payload: id
   }
 }
 
-export const filterOrigin = (status) =>{
+export const filterOrigin = (status) => {
   // console.log(id,'actions');
- return{
-     type: FILTER_ORIGIN,
-     payload: status
- }
+  return {
+    type: FILTER_ORIGIN,
+    payload: status
+  }
 }

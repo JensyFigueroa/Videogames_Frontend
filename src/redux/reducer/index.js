@@ -21,9 +21,17 @@ const rootReducer = (state = inicialState, action) => {
 
         case GET_GAME_X_NAME:
             console.log('Por name ',action.payload)
+
+            let filterName;
+
+            if (!action.payload) {
+                filterName = state.allGames
+            }else{
+                filterName = action.payload
+            }
             return {
                 ...state,
-                games: action.payload
+                games: filterName
             }
 
         case GET_GENRES:

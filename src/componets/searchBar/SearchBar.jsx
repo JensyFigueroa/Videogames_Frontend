@@ -6,10 +6,13 @@ export default function SearchBar(props) {
    const [name, setName] = useState(0);
 
    const handleSearchChange = (e) => {
+
       let { value } = e.target;
 
-      if (value) {
-         setName(value);
+      if (value === '') {
+         setName(0);
+      }else{
+         setName(value)
       }
       
    };
