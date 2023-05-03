@@ -3,8 +3,8 @@ import { GET_GAMES, GET_GAME_X_NAME, GET_GENRES, FILTER_GENRES, ORDER_CARDS, FIL
 const inicialState = {
     games: [],
     allGames: [],
+    tempGames:[],
     genres: [],
-    test:[],
     loading: true
 }
 
@@ -20,7 +20,6 @@ const rootReducer = (state = inicialState, action) => {
             }
 
         case GET_GAME_X_NAME:
-            console.log('Por name ',action.payload)
 
             let filterName;
 
@@ -42,18 +41,17 @@ const rootReducer = (state = inicialState, action) => {
 
         case FILTER_GENRES:
             let filterGameXGenres;
-            let arrGameXGares = state.games;
 
             if (action.payload === 'Select Option') {
-                filterGameXGenres =  state.allGames
+                filterGameXGenres =  state.tempGames
             } else {
-                filterGameXGenres = arrGameXGares.filter(game => game.genres && game.genres.includes(action.payload))
-                console.log(state.games)
+                filterGameXGenres = state.tempGames.filter(game => game.genres && game.genres.includes(action.payload))
+                console.log(state.tempGames)
             } 
 
             return {
                 ...state,
-                games:[...filterGameXGenres],               
+                games: [...filterGameXGenres],             
             }
 
         case ORDER_CARDS:
@@ -89,7 +87,8 @@ const rootReducer = (state = inicialState, action) => {
 
             return {
                 ...state,
-                games: filterXorigin
+                games: filterXorigin,
+                tempGames : [...filterXorigin]
             }
 
         default: return {
