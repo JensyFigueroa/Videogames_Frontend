@@ -10,7 +10,6 @@ import spinner from './Spinner.gif'
 export default function VideoGames() {
 
   const dispatch = useDispatch()
-
   useEffect(() => {
     dispatch(getGames());
     dispatch(getGenres());
@@ -25,16 +24,17 @@ export default function VideoGames() {
   const genres = useSelector(state => state.genres)
 
   return (
-    <div style={{ position: 'relative' }}>
+    <div>
       <div className={styles.section}>
-        <h2>Find or create your favorite game </h2>
+        <h1>Find or create your favorite game </h1>
         <p>Live the best experience in Game On</p>
-        {/* <div className={styles.wave}></div> */}
       </div>
 
       <div className={styles.containerSearch}>
         <SearchBar onSearch={onSearch} />
 
+
+        <div className={styles.boxFilter}>
         <div className={styles.filter}>
           <label>Genres:</label>
           <select onChange={(e) => dispatch(filterGenres(e.target.value))}>
@@ -56,6 +56,8 @@ export default function VideoGames() {
             {['Select Option', 'Ascendente', 'Descendente'].map((e, i) => <option value={e} key={i}>{e}</option>)}
           </select>
         </div>
+        </div>
+
 
       </div>
 
