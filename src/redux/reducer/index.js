@@ -1,11 +1,12 @@
-import { GET_GAMES, GET_GAME_X_NAME, GET_GENRES, FILTER_GENRES, ORDER_CARDS, FILTER_ORIGIN } from "../actions"
+import { GET_GAMES, GET_GAME_X_NAME, GET_GENRES, FILTER_GENRES, ORDER_CARDS, FILTER_ORIGIN, GET_DETAIL } from "../actions"
 
 const inicialState = {
     games: [],
     allGames: [],
-    tempGames:[],
+    tempGames: [],
     genres: [],
-    loading: true
+    loading: true,
+    detailId: []
 }
 
 const rootReducer = (state = inicialState, action) => {
@@ -16,7 +17,13 @@ const rootReducer = (state = inicialState, action) => {
                 ...state,
                 games: [...action.payload],
                 allGames: [...action.payload],
-                loading: false  
+                loading: false
+            }
+
+        case GET_DETAIL:
+            return {
+                ...state,
+                detailId: action.payload
             }
 
         case GET_GAME_X_NAME:
@@ -25,8 +32,8 @@ const rootReducer = (state = inicialState, action) => {
 
             if (!action.payload) {
                 filterName = state.allGames
-            }else{
-                filterName = action.payload
+            } else {
+                filterName = action.payload// tiene los 15 name de la API Y DB
             }
             return {
                 ...state,
@@ -43,41 +50,54 @@ const rootReducer = (state = inicialState, action) => {
             let filterGameXGenres;
 
             if (action.payload === 'Select Option') {
-                filterGameXGenres =  state.tempGames
+                filterGameXGenres = state.tempGames
             } else {
-                filterGameXGenres = state.tempGames.filter(game => game.genres && game.genres.includes(action.payload))
-                console.log(state.tempGames)
-            } 
+                filterGameXGenres = state.tempGames.filter(game => game.genres.includes(action.payload))
+            }
 
             return {
                 ...state,
-                games: [...filterGameXGenres],             
+                games: [...filterGameXGenres],
             }
 
         case ORDER_CARDS:
-            let orderCards;
+            
+               let orderCards = [...state.games];
+   
+               orderCards.sort((a, b) => {
+                   const nameA = a.name.toUpperCase();
+                   const nameB = b.name.toUpperCase();
+                   if (nameA < nameB) {
+                       return -1;
+                   }
+                   if (nameA > nameB) {
+                       return 1;
+                   }
+                   return 0;
+               })
+    
+               if (action.payload) {
+               
+                   return {
+                       ...state,
+                       games: orderCards
+                   }
+               }
+   
+               let reverse = orderCards.reverse();
+               return {
+                   ...state,
+                   games: reverse
+               }
 
-            if (action.payload === 'Ascendente') {
-                orderCards = state.games.sort((a, b) => a.id < b.id ? 1 : -1)
-            }
-            if (action.payload === 'Descendente') {
-                orderCards = state.games.sort((a, b) => a.id > b.id ? 1 : -1)
-            }
-            if (action.payload === 'Select Option') {
-                orderCards = state.allGames
-            }
-            return {
-                ...state,
-                games: [...orderCards]
-            }
 
         case FILTER_ORIGIN:
-    
+
             let filterXorigin;
             if (action.payload === 'Select Option') {
                 filterXorigin = state.allGames
             }
-            
+
             if (action.payload === 'Local') {
                 filterXorigin = state.allGames.filter(game => typeof game.id === 'string')
             }
@@ -88,7 +108,7 @@ const rootReducer = (state = inicialState, action) => {
             return {
                 ...state,
                 games: filterXorigin,
-                tempGames : [...filterXorigin]
+                tempGames: [...filterXorigin]
             }
 
         default: return {
